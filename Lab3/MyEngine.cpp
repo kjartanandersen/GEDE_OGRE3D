@@ -85,6 +85,9 @@ void MyEngine::populateScene()
 	directionalLightNode->attachObject(directionalLight);
 	directionalLightNode->setDirection(Ogre::Vector3(0, -1, -1));
 
+	PickupManager::initialize(scene_manager_, player_->GetPlayerEntityNode());
+	PickupManager::addPickupObject("cube.mesh");
+
 	
 }
 
@@ -107,7 +110,7 @@ bool MyEngine::frameStarted(const Ogre::FrameEvent& evt)
 	if (roaming_camera_ != nullptr)
 		roaming_camera_->update(delta_time, state);
 
-	PickUpManager::Update(delta_time, state);
+	PickupManager::Update(delta_time, state);
 
 
 	return true;

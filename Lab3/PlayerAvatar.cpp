@@ -9,10 +9,11 @@ PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name)
 	entity_node_ = scene_manager_->getRootSceneNode()->createChildSceneNode();
 	entity_node_->attachObject(entity_);
 
-	walking_speed_ = 1.0f;
+	walking_speed_ = 5.0f;
 
 	rotation_ = 0.0;
 	rotation_speed_ = 5.0f;
+	isWalking = false;
 }
 
 void PlayerAvatar::Update(Ogre::Real delta_time, const Uint8* state)
@@ -27,11 +28,15 @@ void PlayerAvatar::Update(Ogre::Real delta_time, const Uint8* state)
 	Ogre::Vector3 translate_vector(0, 0, 0);
 	Ogre::Vector3 dir(sin(rotation_), 0, cos(rotation_));
 
+	isWalking = false;
+
 	if (state[SDL_SCANCODE_W]) {
 		translate_vector = walking_speed_ * dir;
+		isWalking = true;
 	}
 	if (state[SDL_SCANCODE_S]) {
-		translate_vector = walking_speed_ * -1 *  dir;
+		translate_vector = walking_speed_ * -1 * dir;
+		isWalking = true;
 	}
 	if (state[SDL_SCANCODE_A]) {
 		rotation_ += delta_time * rotation_speed_;
@@ -42,10 +47,23 @@ void PlayerAvatar::Update(Ogre::Real delta_time, const Uint8* state)
 
 	Move(translate_vector, rotation_, delta_time);
 
-	SetIdleAnimationLoop();
+	if (isWalking)
+	{
+		SetRunAnimatonLoop();
+	}
+	else
+	{
+		SetIdleAnimationLoop();
+
+	}
 
 	animation_state_base_->addTime(delta_time);
 	animation_state_top_->addTime(delta_time);
+}
+
+SceneNode* PlayerAvatar::GetPlayerEntityNode()
+{
+	return entity_node_;
 }
 
 void PlayerAvatar::Move(Ogre::Vector3 translate_vector, float rotation, Ogre::Real delta_time)

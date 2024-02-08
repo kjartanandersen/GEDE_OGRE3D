@@ -14,7 +14,7 @@ public:
 	//
 	void Update(Ogre::Real delta_time, const Uint8* state);
 	//
-
+	SceneNode* GetPlayerEntityNode();
 
 private:
 	SceneManager* scene_manager_;
@@ -27,6 +27,8 @@ private:
 
 	Ogre::Real rotation_;
 	Ogre::Real rotation_speed_;
+
+	bool isWalking;
 
 	void Move(Ogre::Vector3 translate_vector, float rotation, Ogre::Real delta_time);
 	Ogre::Radian GetRotation(const Ogre::Vector3& vec);

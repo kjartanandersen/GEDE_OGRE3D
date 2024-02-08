@@ -2,6 +2,7 @@
 #include "pch.h"
 #include "PlayerAvatar.h"
 #include "RoamingCamera.h"
+#include "PickupManager.h"
 
 using namespace Ogre;
 using namespace OgreBites;
