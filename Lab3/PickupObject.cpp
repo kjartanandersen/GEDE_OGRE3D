@@ -70,3 +70,4 @@ void PickupObject::update(float delta_time) const
 		if (pickup_effect_->isRunning()) pickup_effect_->update(delta_time);
 	}
 }
+

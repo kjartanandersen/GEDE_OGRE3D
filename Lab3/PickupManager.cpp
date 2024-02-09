@@ -98,12 +98,16 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
         // Basically write the if clause.
 
         bool isPickedUp = pickupObject->isPickedUp();
-        bool collidesWith = pickupObject->collidesWith(player_node_, 1.0f);
 
-        if (!pickupObject->isPickedUp() && pickupObject->collidesWith(player_node_, 1.0f))
+        if (!pickupObject->isPickedUp() && pickupObject->collidesWith(player_node_, 5.0f))
         {
             // BONUS
             // TODO: Make the scene node of the cube a child of the player's scene node, and center it on the player
+            scene_manager_->getRootSceneNode()->removeChild(pickupObject->getSceneNode());
+
+            player_node_->addChild(pickupObject->getSceneNode());
+
+            pickupObject->getSceneNode()->setPosition(0, 0, 0);
 
             pickupObject->runPickupEffect();
         }
@@ -117,11 +121,17 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
 
                 // 1) Destroy the scene node
                 // hint: https://ogrecave.github.io/ogre/api/1.12/class_ogre_1_1_scene_manager.html#aea3103164ed0f27baeb67a3ae2fe429b
+                
+                pickupObject->getSceneNode()->detachObject(pickupObject->getEntity());
+
                 scene_manager_->destroyEntity(pickupObject->getEntity());
 
                 // 2) Erase from PickupManager
-                pickup_objects.erase(i);
+                pickup_objects.erase(i++);
                 erased = true;
+                delete pickupObject;
+
+                addPickupObject("cube.mesh");
             }
         }
 
