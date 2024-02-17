@@ -8,49 +8,71 @@ PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name)
 	entity_->setCastShadows(true);
 	entity_node_ = scene_manager_->getRootSceneNode()->createChildSceneNode();
 	entity_node_->attachObject(entity_);
+
+	walking_speed_ = 5.0f;
+
+	rotation_ = 0.0;
+	rotation_speed_ = 5.0f;
+	isWalking = false;
 }
 
-void PlayerAvatar::Update(Ogre::Real delta_time)
+void PlayerAvatar::Update(Ogre::Real delta_time, const Uint8* state)
 {
-	const Uint8* state = SDL_GetKeyboardState(NULL);
 
-	Ogre::Real speed = 12.0f;
 
+	// Leave if right mouse button is being held down
+	if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON_RMASK)
+		return;
+
+	// Construct the movement
 	Ogre::Vector3 translate_vector(0, 0, 0);
-	if (state[SDL_SCANCODE_UP] || state[SDL_SCANCODE_W]) {
-		translate_vector += Ogre::Vector3(0.0f, 0.0f, -speed);
+	Ogre::Vector3 dir(sin(rotation_), 0, cos(rotation_));
+
+	isWalking = false;
+
+	if (state[SDL_SCANCODE_W]) {
+		translate_vector = walking_speed_ * dir;
+		isWalking = true;
 	}
-	if (state[SDL_SCANCODE_DOWN] || state[SDL_SCANCODE_S]) {
-		translate_vector += Ogre::Vector3(0.0f, 0.0f, speed);
+	if (state[SDL_SCANCODE_S]) {
+		translate_vector = walking_speed_ * -1 * dir;
+		isWalking = true;
 	}
-	if (state[SDL_SCANCODE_LEFT] || state[SDL_SCANCODE_A]) {
-		translate_vector += Ogre::Vector3(-speed, 0.0f, 0.0f);
+	if (state[SDL_SCANCODE_A]) {
+		rotation_ += delta_time * rotation_speed_;
 	}
-	if (state[SDL_SCANCODE_RIGHT] || state[SDL_SCANCODE_D]) {
-		translate_vector += Ogre::Vector3(speed, 0.0f, 0.0f);
+	if (state[SDL_SCANCODE_D]) {
+		rotation_ -= delta_time * rotation_speed_;
 	}
 
-	const bool is_walking = translate_vector != Ogre::Vector3(0, 0, 0);
+	Move(translate_vector, rotation_, delta_time);
 
-	if (is_walking)
+	if (isWalking)
 	{
 		SetRunAnimatonLoop();
-		Move(translate_vector, delta_time);
 	}
 	else
 	{
 		SetIdleAnimationLoop();
+
 	}
+
 	animation_state_base_->addTime(delta_time);
 	animation_state_top_->addTime(delta_time);
 }
 
-void PlayerAvatar::Move(Ogre::Vector3 translate_vector, Ogre::Real delta_time)
+SceneNode* PlayerAvatar::GetPlayerEntityNode()
 {
-	entity_node_->translate(translate_vector.x * delta_time, translate_vector.y * delta_time, translate_vector.z * delta_time);
+	return entity_node_;
+}
+
+void PlayerAvatar::Move(Ogre::Vector3 translate_vector, float rotation, Ogre::Real delta_time)
+{
+
+	entity_node_->translate(translate_vector * delta_time * walking_speed_);
 	entity_node_->resetOrientation();
 	// Rotate the player to face in the direction of the translation
-	entity_node_->yaw(GetRotation(translate_vector));
+	entity_node_->yaw(Ogre::Radian(rotation));
 }
 
 Ogre::Radian PlayerAvatar::GetRotation(const Ogre::Vector3& vec)

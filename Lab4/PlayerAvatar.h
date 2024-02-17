@@ -12,9 +12,9 @@ public:
 	PlayerAvatar(SceneManager* scene_manager, String mesh_file_name);
 
 	//
-	void Update(Ogre::Real delta_time);
+	void Update(Ogre::Real delta_time, const Uint8* state);
 	//
-
+	SceneNode* GetPlayerEntityNode();
 
 private:
 	SceneManager* scene_manager_;
@@ -23,7 +23,14 @@ private:
 	AnimationState* animation_state_base_;
 	AnimationState* animation_state_top_;
 
-	void Move(Ogre::Vector3 translate_vector, Ogre::Real delta_time);
+	Ogre::Real walking_speed_;
+
+	Ogre::Real rotation_;
+	Ogre::Real rotation_speed_;
+
+	bool isWalking;
+
+	void Move(Ogre::Vector3 translate_vector, float rotation, Ogre::Real delta_time);
 	Ogre::Radian GetRotation(const Ogre::Vector3& vec);
 	void SetIdleAnimationLoop();
 	void SetRunAnimatonLoop();

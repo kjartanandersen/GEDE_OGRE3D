@@ -4,7 +4,7 @@
 using namespace Ogre;
 using namespace OgreBites;
 
-MyEngine::MyEngine() : ApplicationContext("T-637-GEDE Lab 2")
+MyEngine::MyEngine() : ApplicationContext("T-637-GEDE Lab 3")
 {
 }
 
@@ -43,25 +43,10 @@ void MyEngine::setupSceneManager()
 void MyEngine::setupCamera()
 {
 	// Add camera
-	camera_node_ = scene_manager_->getRootSceneNode()->createChildSceneNode();
-	camera_ = scene_manager_->createCamera("MainCamera");
 
-	camera_->setNearClipDistance(5);
-	camera_->setAutoAspectRatio(true);
+	roaming_camera_ = new RoamingCamera(scene_manager_, getRenderWindow(), Vector3(0, 0, 50));
 
-	camera_node_->setPosition(0, 10, 50);
-	camera_node_->lookAt(Ogre::Vector3(0, 0, 0), Node::TransformSpace::TS_WORLD);
-	camera_node_->attachObject(camera_);
-
-	Viewport* vp = getRenderWindow()->addViewport(camera_);
-	camera_->setAspectRatio(Ogre::Real(vp->getActualWidth()) / Ogre::Real(vp->getActualHeight()));
-
-	// To match the BG color with the fog
-	Ogre::ColourValue fadeColour(0.9, 0.9, 0.9);
-	vp->setBackgroundColour(fadeColour);
-
-	// Add fog that starts 50 units away from the camera, ends at 300 units, and increases in a linear fashion
-	scene_manager_->setFog(Ogre::FOG_LINEAR, fadeColour, 0, 50, 300);
+	
 }
 
 void MyEngine::populateScene()
@@ -100,13 +85,39 @@ void MyEngine::populateScene()
 	directionalLightNode->attachObject(directionalLight);
 	directionalLightNode->setDirection(Ogre::Vector3(0, -1, -1));
 
-	camera_node_->setFixedYawAxis(true);
-	camera_node_->setAutoTracking(true, player_->entity_node_);
+	PickupManager::initialize(scene_manager_, player_->GetPlayerEntityNode());
+
+	for (int i = 0; i < 10; i++)
+	{
+		PickupManager::addPickupObject("MyCustomCube.mesh");
+	}
+
+	
+
+	
 }
 
 bool MyEngine::frameStarted(const Ogre::FrameEvent& evt)
 {
+	// Main game loop of the application
+
+	// Let parent handle this callback as well
 	ApplicationContext::frameStarted(evt);
-	player_->Update(evt.timeSinceLastFrame);
+	// Store the time since last frame
+	const Ogre::Real delta_time = evt.timeSinceLastFrame;
+
+	// Check what keys are being pressed
+	const Uint8* state = SDL_GetKeyboardState(nullptr);
+
+	// Update any subsystem
+	if (player_ != nullptr)
+		player_->Update(delta_time, state);
+
+	if (roaming_camera_ != nullptr)
+		roaming_camera_->update(delta_time, state);
+
+	PickupManager::Update(delta_time, state);
+
+
 	return true;
 }

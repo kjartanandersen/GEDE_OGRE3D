@@ -1,6 +1,8 @@
 #pragma once
 #include "pch.h"
 #include "PlayerAvatar.h"
+#include "RoamingCamera.h"
+#include "PickupManager.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -29,10 +31,9 @@ private:
 	Ogre::Root* root_;
 	// Scene Manager
 	Ogre::SceneManager* scene_manager_;
-	// Node for camera
-	Ogre::SceneNode* camera_node_;
 	// Camera
-	Ogre::Camera* camera_;
+	RoamingCamera* roaming_camera_;
+	
 	//
 	PlayerAvatar* player_;
 };

@@ -87,6 +87,11 @@ void MyEngine::populateScene()
 
 	PickupManager::initialize(scene_manager_, player_->GetPlayerEntityNode());
 	PickupManager::addPickupObject("cube.mesh");
+	PickupManager::addPickupObject("cube.mesh");
+	PickupManager::addPickupObject("cube.mesh");
+	PickupManager::addPickupObject("cube.mesh");
+	PickupManager::addPickupObject("cube.mesh");
+	PickupManager::addPickupObject("cube.mesh");
 
 	
 }

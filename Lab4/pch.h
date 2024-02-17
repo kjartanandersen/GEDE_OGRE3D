@@ -12,7 +12,7 @@
 #include <OgreInput.h>
 #include <SDL.h>
 #include <iostream>
-
+#include <OgreMath.h>
 #include <OgreRTShaderSystem.h>
 
 #endif
