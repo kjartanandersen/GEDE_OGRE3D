@@ -52,7 +52,11 @@ void MyEngine::setupCamera()
 void MyEngine::populateScene()
 {
 	// Add sinbad model
-	player_ = new PlayerAvatar(scene_manager_, "Sinbad.mesh");
+	//player_ = new PlayerAvatar(scene_manager_, "Sinbad.mesh");
+
+	// Add sinbad 
+	player_ = new PlayerSinbadAvatar(scene_manager_);
+
 
 	// Add ground
 	Plane plane(Ogre::Vector3::UNIT_Y, -5);

@@ -1,6 +1,7 @@
 #pragma once
 #include "pch.h"
 #include "PlayerAvatar.h"
+#include "PlayerSinbadAvatar.h"
 #include "RoamingCamera.h"
 #include "PickupManager.h"
 
@@ -35,5 +36,5 @@ private:
 	RoamingCamera* roaming_camera_;
 	
 	//
-	PlayerAvatar* player_;
+	PlayerSinbadAvatar* player_;
 };

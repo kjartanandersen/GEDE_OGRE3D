@@ -18,7 +18,7 @@ public:
 
 private:
 	SceneManager* scene_manager_;
-	Entity* entity_;
+	
 	
 	AnimationState* animation_state_base_;
 	AnimationState* animation_state_top_;
@@ -37,5 +37,7 @@ private:
 	void StopAnimationLoop(void) const;
 	void StartAnimationLoop(void) const;
 
+protected:
+	Entity* entity_;
 };
 
