@@ -52,7 +52,11 @@ void MyEngine::setupCamera()
 void MyEngine::populateScene()
 {
 	// Add sinbad model
-	player_ = new PlayerAvatar(scene_manager_, "Sinbad.mesh");
+	//player_ = new PlayerAvatar(scene_manager_, "Sinbad.mesh");
+
+	// Add sinbad 
+	player_ = new PlayerSinbadAvatar(scene_manager_);
+
 
 	// Add ground
 	Plane plane(Ogre::Vector3::UNIT_Y, -5);
@@ -86,12 +90,15 @@ void MyEngine::populateScene()
 	directionalLightNode->setDirection(Ogre::Vector3(0, -1, -1));
 
 	PickupManager::initialize(scene_manager_, player_->GetPlayerEntityNode());
-	PickupManager::addPickupObject("cube.mesh");
-	PickupManager::addPickupObject("cube.mesh");
-	PickupManager::addPickupObject("cube.mesh");
-	PickupManager::addPickupObject("cube.mesh");
-	PickupManager::addPickupObject("cube.mesh");
-	PickupManager::addPickupObject("cube.mesh");
+
+	for (int i = 0; i < 10; i++)
+	{
+		PickupManager::addPickupObject("MyCustomCube.mesh");
+	}
+
+	PickupManager::createPickupTower();
+
+	
 
 	
 }

@@ -4,6 +4,7 @@
 #include "IPickupEffect.h"
 #include "SwirlEffect.h"
 #include "SwirlEffect.h"
+#include "StackAllocator.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -19,6 +20,10 @@ public:
 	// scale: How much the size of the object is scaled in the x, y and z dimensions
 	PickupObject(SceneManager* scene_manager, const char* mesh_file_name, Vector3
 		position = Vector3(0, 0, 0), Vector3 scale = Vector3(1, 1, 1));
+
+	PickupObject(short allocation_mode, SceneManager* scene_manager,
+		const char* mesh_file_name, Vector3	position, Vector3 scale);
+
 	~PickupObject();
 
 	SceneNode* getSceneNode() const;		                  // Returns the scene node that holds this object
@@ -29,6 +34,7 @@ public:
 	void runPickupEffect();                                   // Display a special motion effect on the game object
 	bool collidesWith(SceneNode* other_node, float distance); // True if the passed node is within distance of this object
 	void update(float delta_time) const;                      // Updates object, including any running motion effects
+	
 
 private:
 	SceneManager* scene_manager_;      // The main scene manager
@@ -38,4 +44,11 @@ private:
 
 	bool picked_up_;                   // True if the pickup effect has been run
 	IPickupEffect* pickup_effect_;     // An interesting pickup motion effect 
+
+	short allocation_mode;
+	int array_size;
+	int** arr;
+	StackAllocator* stack_allocator;
+
+	void _initialize(SceneManager* scene_manager, const char* mesh_file_name, Ogre::Vector3 position, Ogre::Vector3 scale);
 };
