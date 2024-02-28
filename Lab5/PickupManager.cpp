@@ -101,6 +101,7 @@ void PickupManager::addPickupObject(const char* mesh_file_name)
 void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
 {
     // Update all the managed pickup objects, and delete them if they finished the effect
+    /*
     for (auto i = pickup_objects.begin(); i != pickup_objects.end();) {
         bool erased = false;
         IPickupObject* pickupObject = *i;
@@ -151,6 +152,7 @@ void PickupManager::Update(Ogre::Real delta_time, const Uint8* state)
         // Don't increase the counter if we have deleted an item, otherwise it throws an error
         if (!erased) ++i;
     }
+    */
 
 
     if (create_pickup_tower && (tower_current_layers < tower_max_layers))
@@ -201,7 +203,7 @@ void PickupManager::_initialize_tower_parameters()
     tower_width = 5;
     tower_length = 5;
     tower_current_height = 0.0f;
-    tower_max_layers = 5.0f;
+    tower_max_layers = 10.0f;
     tower_current_layers = 0.0f;
     tower_instantiation_milliseconds = 0;
 }
@@ -244,7 +246,7 @@ void PickupManager::addPickupObject(const char* mesh_file_name, Vector3 position
     const auto start = std::chrono::high_resolution_clock::now();
 
     // instantiation WITH memory allocation testing feature
-    PickupObject* pickupObject = new PickupObject(0, scene_manager_, mesh_file_name, position, Vector3(1, 1, 1));
+    PickupObject* pickupObject = new PickupObject(2, scene_manager_, mesh_file_name, position, Vector3(1, 1, 1));
 
     const auto end = std::chrono::high_resolution_clock::now();
     const int duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();

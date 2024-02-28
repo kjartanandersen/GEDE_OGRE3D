@@ -159,4 +159,7 @@ void PickupObject::_initialize(SceneManager* scene_manager, const char* mesh_fil
 	entity_->setCastShadows(true);
 	pickup_effect_ = nullptr;
 	picked_up_ = false;
+
+	array_size = 100000;
+	arr = new int *[array_size];
 }

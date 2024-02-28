@@ -44,7 +44,7 @@ void MyEngine::setupCamera()
 {
 	// Add camera
 
-	roaming_camera_ = new RoamingCamera(scene_manager_, getRenderWindow(), Vector3(0, 0, 50));
+	roaming_camera_ = new RoamingCamera(scene_manager_, getRenderWindow(), Vector3(-10, 25, 100));
 
 	
 }
@@ -91,10 +91,12 @@ void MyEngine::populateScene()
 
 	PickupManager::initialize(scene_manager_, player_->GetPlayerEntityNode());
 
+	/*
 	for (int i = 0; i < 10; i++)
 	{
 		PickupManager::addPickupObject("MyCustomCube.mesh");
 	}
+	*/
 
 	PickupManager::createPickupTower();
 

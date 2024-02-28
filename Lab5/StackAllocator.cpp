@@ -3,8 +3,6 @@
 
 void StackAllocator::init(size_t total_size)
 {
-	
-
 	m_StartPtr = malloc(total_size);
 	m_TotalSize = total_size;
 	m_Offset = 0;
@@ -13,8 +11,11 @@ void StackAllocator::init(size_t total_size)
 
 void* StackAllocator::allocate(size_t size)
 {
-	m_Offset++;
-	return (void*)((int)m_StartPtr + m_Offset);
+
+	void* retVal = (void*)((int)m_StartPtr + (m_Offset));
+	m_Offset += size;
+
+	return retVal;
 }
 
 void StackAllocator::reset()
@@ -24,5 +25,7 @@ void StackAllocator::reset()
 
 StackAllocator::~StackAllocator()
 {
+	
 	free(m_StartPtr);
+	
 }
