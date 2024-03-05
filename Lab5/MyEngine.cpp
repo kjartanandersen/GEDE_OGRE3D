@@ -4,7 +4,7 @@
 using namespace Ogre;
 using namespace OgreBites;
 
-MyEngine::MyEngine() : ApplicationContext("T-637-GEDE Lab 3")
+MyEngine::MyEngine() : ApplicationContext("T-637-GEDE Lab 5")
 {
 }
 

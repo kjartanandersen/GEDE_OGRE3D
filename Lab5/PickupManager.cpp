@@ -197,7 +197,7 @@ void PickupManager::_destroy()
 
 void PickupManager::_initialize_tower_parameters()
 {
-    create_pickup_tower = false;
+    create_pickup_tower = true;
     tower_spawn_period = 1.0f;
     tower_spawn_timer = 0.0f;
     tower_width = 5;
@@ -254,6 +254,7 @@ void PickupManager::addPickupObject(const char* mesh_file_name, Vector3 position
 
     pickup_objects.push_back(pickupObject);
 }
+
 
 void PickupManager::createPickupTower()
 {

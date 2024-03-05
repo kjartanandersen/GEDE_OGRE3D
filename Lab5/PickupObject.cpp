@@ -89,12 +89,15 @@ PickupObject::~PickupObject()
 		// STACK ALLOCATOR DELETE
 		stack_allocator->reset();
 		delete stack_allocator;
+		stack_allocator = nullptr;
 		break;
 	}
 
 	default:
 		break;
 	}
+	delete arr;
+	arr = nullptr;
 }
 
 SceneNode* PickupObject::getSceneNode() const
