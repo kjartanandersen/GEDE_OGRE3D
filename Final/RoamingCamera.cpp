@@ -28,7 +28,8 @@ RoamingCamera::RoamingCamera(SceneManager* scene_manager, RenderWindow*
 	scene_manager_->setFog(Ogre::FOG_LINEAR, fadeColour, 0, 50, 300);
 
 	// Setting motion parameters
-	movement_speed_ = 7.0f;
+	movement_speed_ = 10.0f;
+	run_speed = 25.0f;
 	rotation_speed_ = 0.8f;
 
 	camera_pitch_node_->setFixedYawAxis(true);
@@ -41,6 +42,7 @@ RoamingCamera::~RoamingCamera()
 void RoamingCamera::update(Ogre::Real delta_time, const Uint8* keyboard_state)
 {
 	int x = 0, y = 0;
+
 	// Leave if right mouse button is not being pressed
 	// ...but also retrieve and store mouse movement
 	if (!(SDL_GetRelativeMouseState(&x, &y) & SDL_BUTTON_RMASK)) return;
@@ -73,7 +75,16 @@ void RoamingCamera::update(Ogre::Real delta_time, const Uint8* keyboard_state)
 
 	Ogre::Vector3 direction = (camera_yaw_node_->getOrientation() * camera_pitch_node_->getOrientation()) * vec;
 
-	camera_yaw_node_->translate(delta_time * movement_speed_ * direction);
+	if (keyboard_state[SDL_SCANCODE_LSHIFT])
+	{
+		camera_yaw_node_->translate(delta_time * run_speed * direction);
+	}
+	else
+	{
+		camera_yaw_node_->translate(delta_time * movement_speed_ * direction);
+	}
+
+
 }
 
 
@@ -89,16 +100,16 @@ void RoamingCamera::update(Ogre::Real delta_time, const Ogre::Vector2 camera_mov
 	// Rotate the camera "horizontally" to match the player orientation
 	float rotX = camera_movement.x * delta_time * -1;
 	camera_yaw_node_->yaw(Ogre::Radian(rotX));
-	
-	
-	float rotY = Math::Clamp(((camera_movement.y * delta_time * 20.0f) + camera_->getFOVy().valueDegrees()) , 30.0f, 90.0f);
+
+
+	float rotY = Math::Clamp(((camera_movement.y * delta_time * 20.0f) + camera_->getFOVy().valueDegrees()), 30.0f, 90.0f);
 
 
 	// Rotate the camera "vertically" to look at the player
 	camera_pitch_node_->lookAt(player_position, Ogre::Node::TransformSpace::TS_WORLD);
 
 	camera_->setFOVy(Ogre::Degree(rotY));
-	
+
 }
 
 Ogre::Vector2 RoamingCamera::getDirection()

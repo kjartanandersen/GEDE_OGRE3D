@@ -4,7 +4,7 @@
 using namespace Ogre;
 using namespace OgreBites;
 
-MyEngine::MyEngine() : ApplicationContext("T-637-GEDE Lab 5")
+MyEngine::MyEngine() : ApplicationContext("T-637-GEDE Lab 7")
 {
 }
 
@@ -15,7 +15,9 @@ void MyEngine::setup()
 	setupSceneManager();
 	setupCamera();
 	populateScene();
+	setupInputManager();
 
+	isController = false;
 }
 
 bool MyEngine::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -44,7 +46,7 @@ void MyEngine::setupCamera()
 {
 	// Add camera
 
-	roaming_camera_ = new RoamingCamera(scene_manager_, getRenderWindow(), Vector3(-10, 25, 100));
+	roaming_camera_ = new RoamingCamera(scene_manager_, getRenderWindow(), Vector3(0, 0, 50));
 
 	
 }
@@ -91,14 +93,10 @@ void MyEngine::populateScene()
 
 	PickupManager::initialize(scene_manager_, player_->GetPlayerEntityNode());
 
-	/*
 	for (int i = 0; i < 10; i++)
 	{
 		PickupManager::addPickupObject("MyCustomCube.mesh");
 	}
-	*/
-
-	PickupManager::createPickupTower();
 
 	
 
@@ -117,15 +115,54 @@ bool MyEngine::frameStarted(const Ogre::FrameEvent& evt)
 	// Check what keys are being pressed
 	const Uint8* state = SDL_GetKeyboardState(nullptr);
 
+	const Ogre::Vector2 camera_direction = roaming_camera_->getDirection();
+	const Ogre::Vector2 character_movement = input_manager->getCharacterMovement();
+	
+	
+
+	// Update Input Manager
+	if (input_manager != nullptr)
+		input_manager->update();
+
 	// Update any subsystem
 	if (player_ != nullptr)
-		player_->Update(delta_time, state);
+	{
+		if (isController)
+		{
+			player_->Update(delta_time, camera_direction, character_movement, state);
+		}
+		else
+		{
+			player_->Update(delta_time, state);
+		}
+
+	}
+
+	const Ogre::Vector3 player_postion = player_->GetPlayerPosition();
+	const Ogre::Vector2 camera_movement = input_manager->getCameraMovement();
 
 	if (roaming_camera_ != nullptr)
-		roaming_camera_->update(delta_time, state);
+	{
+		if (isController)
+		{
+			roaming_camera_->update(delta_time, camera_movement, player_postion);
+			
+		}
+		else
+		{
+			roaming_camera_->update(delta_time, state);
+		}
+
+	}
 
 	PickupManager::Update(delta_time, state);
 
 
 	return true;
+}
+
+void MyEngine::setupInputManager()
+{
+
+	input_manager = new InputManager();
 }

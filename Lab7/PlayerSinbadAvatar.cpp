@@ -17,6 +17,27 @@ PlayerSinbadAvatar::PlayerSinbadAvatar(SceneManager* scene_manager) : PlayerAvat
 	
 }
 
+void PlayerSinbadAvatar::Update(Ogre::Real delta_time, Ogre::Vector2 camera_direction, Ogre::Vector2 character_movement, const Uint8* state)
+{
+	PlayerAvatar::Update(delta_time, camera_direction, character_movement);
+
+	if (state[SDL_SCANCODE_R])
+	{
+		isHandsClosed = !isHandsClosed;
+	}
+
+	if (isHandsClosed)
+	{
+		SetCloseHandsAmin();
+	}
+	else
+	{
+		SetOpenHandsAmin();
+	}
+
+	
+}
+
 void PlayerSinbadAvatar::Update(Ogre::Real delta_time, const Uint8* state)
 {
 	PlayerAvatar::Update(delta_time, state);
@@ -35,7 +56,7 @@ void PlayerSinbadAvatar::Update(Ogre::Real delta_time, const Uint8* state)
 		SetOpenHandsAmin();
 	}
 
-	
+
 }
 
 void PlayerSinbadAvatar::SetOpenHandsAmin()

@@ -1,0 +1,44 @@
+particle_system MySmoke1 {
+	// Make the particles use the "Examples/Smoke" material, and be 10x10 units large.
+	material			Examples/Smoke
+	particle_width		10
+	particle_height		10
+	
+	// Make the emitter limit the emitter to have at maximum 500 particles active.
+	// And set the particle type as point, which always faces the camera.  
+	quota			500
+	texture_sheet_size  1 1
+	billboard_type		point
+	// Make the emitters origin a point.
+	emitter Ellipsoid {
+		// Make the emitter emit 3 particles per second. 
+		emission_rate		10
+		// Emitt the particles in the given direction, at a velocity of 20 units per second.
+		direction		0 1 0 
+		velocity		10
+		// This will be the range of angle variation the particles will be fired at.
+		//angle			30
+		// Destroy the particle after 10 seconds.
+		time_to_live		10
+		// Colour the particles red with a fully opaque alpha value.
+		colour			1 0 0 0
+		// Destroy the particle after 1 to 4 seconds.
+		time_to_live_min	1
+		time_to_live_max	10
+		// Colour the particles linearly interpolated from red to blue.
+		colour_range_start	1 0 0
+		colour_range_end	0 0 1
+		// Emit particles for 1 second at a time with a 1 second interval.
+		//duration 			1
+		//repeat_delay		1
+		
+	}
+
+	
+
+	affector Scaler
+   	{
+       	rate 50
+   	}
+	
+}

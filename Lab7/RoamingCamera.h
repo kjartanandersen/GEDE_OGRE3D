@@ -21,6 +21,9 @@ public:
 	// delta_time: Time since last update in seconds
 	// state: Keyboard state, retrieved using SDL_GetKeyboardState
 	void update(Ogre::Real delta_time, const Uint8* keyboard_state);
+	void update(Ogre::Real delta_time, const Ogre::Vector2 camera_movement, const Ogre::Vector3 player_position);
+
+	Ogre::Vector2 getDirection();
 private:
 	SceneManager* scene_manager_;	// The main scene manager
 	Camera* camera_;                // The camera itself
@@ -28,5 +31,9 @@ private:
 	SceneNode* camera_pitch_node_;    // The scene node that holds the camera
 
 	float movement_speed_;          // How fast the camera moves when WASD keys are pressed
+	float run_speed;
 	float rotation_speed_;          // How fast the camera rotates when mouse is moved
+	float camera_angle_;
+
+	
 };

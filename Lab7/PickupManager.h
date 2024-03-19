@@ -35,7 +35,6 @@ public:
 
     static void addPickupObject(const char* mesh_file_name);
 
-    static void createPickupTower();
 
     static void Update(Ogre::Real delta_time, const Uint8* state);
 
@@ -44,16 +43,6 @@ protected:
     static SceneManager* scene_manager_;
     static SceneNode* player_node_;
     static std::list<IPickupObject*> pickup_objects;
-
-    static bool create_pickup_tower;
-    static float tower_spawn_timer;
-    static float tower_current_layers;
-    static float tower_max_layers;
-    static float tower_spawn_period;
-    static int tower_instantiation_milliseconds;
-    static int tower_width;
-    static int tower_length;
-    static float tower_current_height;
 
     /** Class default constructor */
     PickupManager();
@@ -66,17 +55,5 @@ protected:
 
     /** Destory the pickup manager instance. */
     void _destroy();
-
-    /* Functions related to the tower of pick up objects */
-
-    static void _initialize_tower_parameters();
-
-    static void _create_pickup_tower_layer();
-
-    static void _destroy_pickup_tower();
-
-    static void addPickupObject(const char* mesh_file_name, Vector3 position);
-
-    
 };
 

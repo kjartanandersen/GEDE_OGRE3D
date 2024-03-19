@@ -21,10 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{bd2c2b42-7665-4243-a348-2d49af030735}</ProjectGuid>
-    <RootNamespace>Lab5</RootNamespace>
+    <ProjectGuid>{0df1f158-e55b-4fef-8eea-5917ba696555}</ProjectGuid>
+    <RootNamespace>Lab7</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Lab5</ProjectName>
+    <ProjectName>Lab7</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -142,8 +142,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyEngine.cpp" />
+    <ClCompile Include="ParticleEffect.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -155,20 +157,20 @@
     <ClCompile Include="PlayerAvatar.cpp" />
     <ClCompile Include="PlayerSinbadAvatar.cpp" />
     <ClCompile Include="RoamingCamera.cpp" />
-    <ClCompile Include="StackAllocator.cpp" />
     <ClCompile Include="SwirlEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="IPickupEffect.h" />
     <ClInclude Include="IPickupObject.h" />
     <ClInclude Include="MyEngine.h" />
+    <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PickupManager.h" />
     <ClInclude Include="PickupObject.h" />
     <ClInclude Include="PlayerAvatar.h" />
     <ClInclude Include="PlayerSinbadAvatar.h" />
     <ClInclude Include="RoamingCamera.h" />
-    <ClInclude Include="StackAllocator.h" />
     <ClInclude Include="SwirlEffect.h" />
   </ItemGroup>
   <ItemGroup>

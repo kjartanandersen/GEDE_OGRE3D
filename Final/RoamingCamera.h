@@ -31,8 +31,9 @@ private:
 	SceneNode* camera_pitch_node_;    // The scene node that holds the camera
 
 	float movement_speed_;          // How fast the camera moves when WASD keys are pressed
+	float run_speed;
 	float rotation_speed_;          // How fast the camera rotates when mouse is moved
 	float camera_angle_;
 
-	
+
 };

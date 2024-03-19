@@ -4,6 +4,8 @@
 #include "PlayerSinbadAvatar.h"
 #include "RoamingCamera.h"
 #include "PickupManager.h"
+#include "InputManager.h"
+#include "SoundManager.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -27,6 +29,8 @@ public:
 	//
 	bool frameStarted(const Ogre::FrameEvent& evt);
 
+	void setupInputManager();
+
 private:
 	// OGRE root 
 	Ogre::Root* root_;
@@ -37,4 +41,8 @@ private:
 	
 	//
 	PlayerSinbadAvatar* player_;
+
+	InputManager* input_manager;
+
+	bool isController;
 };

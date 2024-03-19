@@ -13,8 +13,11 @@ public:
 
 	//
 	void Update(Ogre::Real delta_time, const Uint8* state);
+	void Update(Ogre::Real delta_time, const Ogre::Vector2 camera_direction, const Ogre::Vector2 character_movement);
+
 	//
 	SceneNode* GetPlayerEntityNode();
+	Ogre::Vector3 GetPlayerPosition();
 
 private:
 	SceneManager* scene_manager_;
@@ -28,6 +31,8 @@ private:
 	Ogre::Real rotation_;
 	Ogre::Real rotation_speed_;
 
+	float speed_;
+
 	bool isWalking;
 
 	void Move(Ogre::Vector3 translate_vector, float rotation, Ogre::Real delta_time);
@@ -36,6 +41,7 @@ private:
 	void SetRunAnimatonLoop();
 	void StopAnimationLoop(void) const;
 	void StartAnimationLoop(void) const;
+	
 
 protected:
 	Entity* entity_;

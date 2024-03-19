@@ -14,5 +14,8 @@
 #include <iostream>
 #include <OgreMath.h>
 #include <OgreRTShaderSystem.h>
+#include <al.h>
+#include <alc.h>
+#include <alut.h>
 
 #endif

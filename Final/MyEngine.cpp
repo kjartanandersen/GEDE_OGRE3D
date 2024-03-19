@@ -4,7 +4,7 @@
 using namespace Ogre;
 using namespace OgreBites;
 
-MyEngine::MyEngine() : ApplicationContext("T-637-GEDE Lab 6")
+MyEngine::MyEngine() : ApplicationContext("T-637-GEDE Final")
 {
 }
 
@@ -17,7 +17,7 @@ void MyEngine::setup()
 	populateScene();
 	setupInputManager();
 
-	isController = true;
+	isController = false;
 }
 
 bool MyEngine::keyPressed(const OgreBites::KeyboardEvent& evt)

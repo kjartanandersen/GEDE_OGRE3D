@@ -21,10 +21,10 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{48bae0c7-d690-4a39-b694-f2cb940c2c87}</ProjectGuid>
-    <RootNamespace>Lab6</RootNamespace>
+    <ProjectGuid>{4b637bff-9aa3-4722-bab8-fe15d38360c2}</ProjectGuid>
+    <RootNamespace>Final</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>Lab6</ProjectName>
+    <ProjectName>Final</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -114,13 +114,13 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\include\OGRE\Bites;$(OGRE_HOME)\Dependencies\include\SDL2;$(OGRE_HOME)\include\OGRE\MeshLodGenerator;$(OGRE_HOME)\include\OGRE\Overlay;$(OGRE_HOME)\include\OGRE\Paging;$(OGRE_HOME)\include\OGRE\Property;$(OGRE_HOME)\include\OGRE\RTShaderSystem;$(OGRE_HOME)\include\OGRE\Terrain;$(OGRE_HOME)\include\OGRE\Volume;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\include\OGRE\Bites;$(OGRE_HOME)\Dependencies\include\SDL2;$(OGRE_HOME)\include\OGRE\MeshLodGenerator;$(OGRE_HOME)\include\OGRE\Overlay;$(OGRE_HOME)\include\OGRE\Paging;$(OGRE_HOME)\include\OGRE\Property;$(OGRE_HOME)\include\OGRE\RTShaderSystem;$(OGRE_HOME)\include\OGRE\Terrain;$(OGRE_HOME)\include\OGRE\Volume;C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OGRE_HOME)\Dependencies\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\lib\$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);OgreBites_d.lib;winmm.lib;imm32.lib;version.lib;msimg32.lib;SDL2maind.lib;SDL2d.lib;OgreMeshLodGenerator_d.lib;OgreOverlay_d.lib;OgrePaging_d.lib;OgreProperty_d.lib;OgreRTShaderSystem_d.lib;OgreTerrain_d.lib;OgreVolume_d.lib;OgreMain_d.lib;</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\Dependencies\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\lib\$(Configuration);C:\Program Files %28x86%29\OpenAL 1.1 SDK\libs\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);OgreBites_d.lib;winmm.lib;imm32.lib;version.lib;msimg32.lib;SDL2maind.lib;SDL2d.lib;OgreMeshLodGenerator_d.lib;OgreOverlay_d.lib;OgrePaging_d.lib;OgreProperty_d.lib;OgreRTShaderSystem_d.lib;OgreTerrain_d.lib;OgreVolume_d.lib;OgreMain_d.lib;C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32\alut.lib;C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32\OpenAL32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -156,6 +156,7 @@
     <ClCompile Include="PlayerAvatar.cpp" />
     <ClCompile Include="PlayerSinbadAvatar.cpp" />
     <ClCompile Include="RoamingCamera.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SwirlEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +170,7 @@
     <ClInclude Include="PlayerAvatar.h" />
     <ClInclude Include="PlayerSinbadAvatar.h" />
     <ClInclude Include="RoamingCamera.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SwirlEffect.h" />
   </ItemGroup>
   <ItemGroup>
