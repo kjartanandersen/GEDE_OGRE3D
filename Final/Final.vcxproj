@@ -156,7 +156,6 @@
     <ClCompile Include="PlayerAvatar.cpp" />
     <ClCompile Include="PlayerSinbadAvatar.cpp" />
     <ClCompile Include="RoamingCamera.cpp" />
-    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="SwirlEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +169,6 @@
     <ClInclude Include="PlayerAvatar.h" />
     <ClInclude Include="PlayerSinbadAvatar.h" />
     <ClInclude Include="RoamingCamera.h" />
-    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="SwirlEffect.h" />
   </ItemGroup>
   <ItemGroup>

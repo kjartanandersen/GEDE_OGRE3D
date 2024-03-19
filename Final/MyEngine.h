@@ -5,7 +5,7 @@
 #include "RoamingCamera.h"
 #include "PickupManager.h"
 #include "InputManager.h"
-#include "SoundManager.h"
+
 
 using namespace Ogre;
 using namespace OgreBites;
