@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "MyEngine.h"
 
+
 using namespace Ogre;
 using namespace OgreBites;
 
@@ -18,6 +19,11 @@ void MyEngine::setup()
 	setupInputManager();
 
 	isController = false;
+	
+	audio_engine = new CAudioEngine();
+	audio_engine->Init();
+	audio_engine->LoadSound("C:\\Ogre\\GEDE\\GEDE\\LabFiles\\Sounds\\footstep.ogg", true, false, false);
+	audio_engine->PlaySound("C:\\Ogre\\GEDE\\GEDE\\LabFiles\\Sounds\\footstep.ogg" );
 }
 
 bool MyEngine::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -157,6 +163,7 @@ bool MyEngine::frameStarted(const Ogre::FrameEvent& evt)
 
 	PickupManager::Update(delta_time, state);
 
+	audio_engine->Update();
 
 	return true;
 }

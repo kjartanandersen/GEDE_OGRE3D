@@ -1,10 +1,11 @@
 #pragma once
-#include "pch.h"
+
 #include "PlayerAvatar.h"
 #include "PlayerSinbadAvatar.h"
 #include "RoamingCamera.h"
 #include "PickupManager.h"
 #include "InputManager.h"
+#include "AudioEngine.h"
 
 
 using namespace Ogre;
@@ -43,6 +44,8 @@ private:
 	PlayerSinbadAvatar* player_;
 
 	InputManager* input_manager;
+
+	CAudioEngine* audio_engine;
 
 	bool isController;
 };

@@ -114,13 +114,13 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\include\OGRE\Bites;$(OGRE_HOME)\Dependencies\include\SDL2;$(OGRE_HOME)\include\OGRE\MeshLodGenerator;$(OGRE_HOME)\include\OGRE\Overlay;$(OGRE_HOME)\include\OGRE\Paging;$(OGRE_HOME)\include\OGRE\Property;$(OGRE_HOME)\include\OGRE\RTShaderSystem;$(OGRE_HOME)\include\OGRE\Terrain;$(OGRE_HOME)\include\OGRE\Volume;C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(OGRE_HOME)\include\OGRE;$(OGRE_HOME)\include\OGRE\Bites;$(OGRE_HOME)\Dependencies\include\SDL2;$(OGRE_HOME)\include\OGRE\MeshLodGenerator;$(OGRE_HOME)\include\OGRE\Overlay;$(OGRE_HOME)\include\OGRE\Paging;$(OGRE_HOME)\include\OGRE\Property;$(OGRE_HOME)\include\OGRE\RTShaderSystem;$(OGRE_HOME)\include\OGRE\Terrain;$(OGRE_HOME)\include\OGRE\Volume;C:\Program Files %28x86%29\OpenAL 1.1 SDK\include;C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\core\inc;C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\fsbank\inc;C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\studio\inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(OGRE_HOME)\Dependencies\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\lib\$(Configuration);C:\Program Files %28x86%29\OpenAL 1.1 SDK\libs\Win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);OgreBites_d.lib;winmm.lib;imm32.lib;version.lib;msimg32.lib;SDL2maind.lib;SDL2d.lib;OgreMeshLodGenerator_d.lib;OgreOverlay_d.lib;OgrePaging_d.lib;OgreProperty_d.lib;OgreRTShaderSystem_d.lib;OgreTerrain_d.lib;OgreVolume_d.lib;OgreMain_d.lib;C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32\alut.lib;C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32\OpenAL32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(OGRE_HOME)\Dependencies\lib;$(OGRE_HOME)\lib;$(OGRE_HOME)\lib\$(Configuration);C:\Program Files %28x86%29\OpenAL 1.1 SDK\libs\Win32;C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\core\lib\x64;C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\fsbank\lib\x64;C:\Program Files %28x86%29\FMOD SoundSystem\FMOD Studio API Windows\api\studio\lib\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CoreLibraryDependencies);%(AdditionalDependencies);OgreBites_d.lib;winmm.lib;imm32.lib;version.lib;msimg32.lib;SDL2maind.lib;SDL2d.lib;OgreMeshLodGenerator_d.lib;OgreOverlay_d.lib;OgrePaging_d.lib;OgreProperty_d.lib;OgreRTShaderSystem_d.lib;OgreTerrain_d.lib;OgreVolume_d.lib;OgreMain_d.lib;C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32\alut.lib;C:\Program Files (x86)\OpenAL 1.1 SDK\libs\Win32\OpenAL32.lib;fmod_vc.lib;fmodL_vc.lib;fsbank_vc.lib;fmodstudio_vc.lib;fmodstudioL_vc.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioEngine.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyEngine.cpp" />
@@ -159,6 +160,7 @@
     <ClCompile Include="SwirlEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioEngine.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="IPickupEffect.h" />
     <ClInclude Include="IPickupObject.h" />

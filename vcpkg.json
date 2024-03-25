@@ -1,0 +1,16 @@
+{
+  "name": "gede",
+  "version": "0.1",
+  "dependencies": [
+    {
+      "name": "libogg"
+
+    },
+    {
+      "name": "libvorbis"
+    },
+    {
+      "name": "libtheora"
+    }
+  ]
+}
