@@ -37,6 +37,7 @@ private:
 	Ogre::Root* root_;
 	// Scene Manager
 	Ogre::SceneManager* scene_manager_;
+	CAudioEngine* audio_engine_;
 	// Camera
 	RoamingCamera* roaming_camera_;
 	
@@ -45,7 +46,6 @@ private:
 
 	InputManager* input_manager;
 
-	CAudioEngine* audio_engine;
 
 	bool isController;
 };

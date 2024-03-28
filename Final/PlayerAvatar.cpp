@@ -1,9 +1,10 @@
 #include "pch.h"
 #include "PlayerAvatar.h"
 
-PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name)
+PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name, CAudioEngine* audio_engine)
 {
 	scene_manager_ = scene_manager;
+	audio_engine_ = audio_engine;
 	entity_ = scene_manager_->createEntity(mesh_file_name);
 	entity_->setCastShadows(true);
 	entity_node_ = scene_manager_->getRootSceneNode()->createChildSceneNode();
@@ -52,6 +53,10 @@ void PlayerAvatar::Update(Ogre::Real delta_time, const Uint8* state)
 	if (isWalking)
 	{
 		SetRunAnimatonLoop();
+
+		//Vector3f playerPos = GetPlayerPosition();
+
+		
 	}
 	else
 	{
@@ -129,6 +134,7 @@ void PlayerAvatar::SetIdleAnimationLoop()
 
 void PlayerAvatar::SetRunAnimatonLoop()
 {
+	
 	if (animation_state_top_ == nullptr)
 	{
 		animation_state_base_ = entity_->getAnimationState("RunBase");
@@ -144,6 +150,17 @@ void PlayerAvatar::SetRunAnimatonLoop()
 		animation_state_top_ = entity_->getAnimationState("RunTop");
 		StartAnimationLoop();
 	}
+
+	Ogre::Real anim_time_pos = animation_state_base_->getTimePosition();
+	std::cout << anim_time_pos << std::endl;
+
+	if (anim_time_pos > 0.3 && anim_time_pos < 0.4)
+	{
+		audio_engine_->LoadSound("C:\\Ogre\\GEDE\\GEDE\\LabFiles\\Sounds\\footstep.ogg", true, false, false);
+		audio_engine_->PlaySound("C:\\Ogre\\GEDE\\GEDE\\LabFiles\\Sounds\\footstep.ogg", entity_node_->convertLocalToWorldDirection(entity_node_->getPosition(), false));
+
+	}
+
 }
 
 void PlayerAvatar::StopAnimationLoop(void) const

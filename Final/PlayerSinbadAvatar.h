@@ -1,12 +1,13 @@
 #pragma once
 
 #include "PlayerAvatar.h"
+#include "AudioEngine.h"
 
 class PlayerSinbadAvatar : public PlayerAvatar
 {
 public:
 	
-	PlayerSinbadAvatar(SceneManager* scene_manager);
+	PlayerSinbadAvatar(SceneManager* scene_manager, CAudioEngine* audio_engine);
 	void Update(Ogre::Real delta_time, Ogre::Vector2 camera_direction, Ogre::Vector2 character_movement, const Uint8* state);
 	void Update(Ogre::Real delta_time, const Uint8* state);
 

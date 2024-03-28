@@ -1,5 +1,6 @@
 #pragma once
 #include "pch.h"
+#include "AudioEngine.h"
 
 using namespace Ogre;
 using namespace OgreBites;
@@ -9,7 +10,7 @@ class PlayerAvatar
 public:
 	SceneNode* entity_node_;
 
-	PlayerAvatar(SceneManager* scene_manager, String mesh_file_name);
+	PlayerAvatar(SceneManager* scene_manager, String mesh_file_name, CAudioEngine* audio_engine);
 
 	//
 	void Update(Ogre::Real delta_time, const Uint8* state);
@@ -21,6 +22,7 @@ public:
 
 private:
 	SceneManager* scene_manager_;
+	CAudioEngine* audio_engine_;
 	
 	
 	AnimationState* animation_state_base_;

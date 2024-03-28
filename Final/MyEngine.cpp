@@ -20,10 +20,9 @@ void MyEngine::setup()
 
 	isController = false;
 	
-	audio_engine = new CAudioEngine();
-	audio_engine->Init();
-	audio_engine->LoadSound("C:\\Ogre\\GEDE\\GEDE\\LabFiles\\Sounds\\footstep.ogg", true, false, false);
-	audio_engine->PlaySound("C:\\Ogre\\GEDE\\GEDE\\LabFiles\\Sounds\\footstep.ogg" );
+	audio_engine_ = new CAudioEngine();
+	audio_engine_->Init();
+	
 }
 
 bool MyEngine::keyPressed(const OgreBites::KeyboardEvent& evt)
@@ -52,7 +51,7 @@ void MyEngine::setupCamera()
 {
 	// Add camera
 
-	roaming_camera_ = new RoamingCamera(scene_manager_, getRenderWindow(), Vector3(0, 0, 50));
+	roaming_camera_ = new RoamingCamera(scene_manager_, getRenderWindow(), Vector3(0, 0, 0));
 
 	
 }
@@ -63,7 +62,7 @@ void MyEngine::populateScene()
 	//player_ = new PlayerAvatar(scene_manager_, "Sinbad.mesh");
 
 	// Add sinbad 
-	player_ = new PlayerSinbadAvatar(scene_manager_);
+	player_ = new PlayerSinbadAvatar(scene_manager_, audio_engine_);
 
 
 	// Add ground
@@ -163,7 +162,7 @@ bool MyEngine::frameStarted(const Ogre::FrameEvent& evt)
 
 	PickupManager::Update(delta_time, state);
 
-	audio_engine->Update();
+	audio_engine_->Update();
 
 	return true;
 }

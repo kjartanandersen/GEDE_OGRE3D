@@ -78,7 +78,7 @@ void CAudioEngine::UnLoadSound(const std::string& strSoundName)
 }
 
 
-int CAudioEngine::PlaySound(const std::string& strSoundName, const AEVector3& vPosition, float fVolumedB)
+int CAudioEngine::PlaySound(const std::string& strSoundName, const Ogre::Vector3f& vPosition, float fVolumedB)
 {
     int nChannelId = sgpImplementation->mnNextChannelId++;
     auto tFoundIt = sgpImplementation->mSounds.find(strSoundName);
@@ -109,7 +109,7 @@ int CAudioEngine::PlaySound(const std::string& strSoundName, const AEVector3& vP
 }
 
 
-void CAudioEngine::SetChannel3dPosition(int nChannelId, const AEVector3& vPosition)
+void CAudioEngine::SetChannel3dPosition(int nChannelId, const Ogre::Vector3f& vPosition)
 {
     auto tFoundIt = sgpImplementation->mChannels.find(nChannelId);
     if (tFoundIt == sgpImplementation->mChannels.end())
@@ -215,7 +215,7 @@ void CAudioEngine::SetEventParameter(const std::string& strEventName, const std:
 
 }
 
-FMOD_VECTOR CAudioEngine::VectorToFmod(const AEVector3& vPosition) {
+FMOD_VECTOR CAudioEngine::VectorToFmod(const Ogre::Vector3f& vPosition) {
     FMOD_VECTOR fVec;
     fVec.x = vPosition.x;
     fVec.y = vPosition.y;

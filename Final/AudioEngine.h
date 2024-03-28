@@ -50,20 +50,20 @@ public:
     void LoadSound(const std::string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
     void UnLoadSound(const std::string& strSoundName);
     //void Set3dListenerAndOrientation(const AEVector3& vPos = AEVector3{ 0, 0, 0 }, float fVolumedB = 0.0f);
-    int PlaySound(const std::string& strSoundName, const AEVector3& vPos = AEVector3{ 0, 0, 0 }, float fVolumedB = 0.0f);
+    int PlaySound(const std::string& strSoundName, const Ogre::Vector3f& vPos = Ogre::Vector3f{ 0, 0, 0 }, float fVolumedB = 0.0f);
     void PlayEvent(const std::string& strEventName);
     //void StopChannel(int nChannelId);
     void StopEvent(const std::string& strEventName, bool bImmediate = false);
     void GetEventParameter(const std::string& strEventName, const std::string& strEventParameter, float* parameter);
     void SetEventParameter(const std::string& strEventName, const std::string& strParameterName, float fValue);
     //void StopAllChannels();
-    void SetChannel3dPosition(int nChannelId, const AEVector3& vPosition);
+    void SetChannel3dPosition(int nChannelId, const Ogre::Vector3f& vPosition);
     void SetChannelVolume(int nChannelId, float fVolumedB);
     //bool IsPlaying(int nChannelId) const;
     bool IsEventPlaying(const std::string& strEventName) const;
     float dbToVolume(float db);
     float VolumeTodB(float volume);
-    FMOD_VECTOR VectorToFmod(const AEVector3& vPosition);
+    FMOD_VECTOR VectorToFmod(const Ogre::Vector3f& vPosition);
 
     
 

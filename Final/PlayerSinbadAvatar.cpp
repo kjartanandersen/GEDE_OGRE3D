@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "PlayerSinbadAvatar.h"
 
-PlayerSinbadAvatar::PlayerSinbadAvatar(SceneManager* scene_manager) : PlayerAvatar(scene_manager, "Sinbad.mesh")
+PlayerSinbadAvatar::PlayerSinbadAvatar(SceneManager* scene_manager, CAudioEngine* audio_engine) : PlayerAvatar(scene_manager, "Sinbad.mesh", audio_engine)
 {
 	isHandsClosed = false;
 
