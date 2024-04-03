@@ -1,5 +1,7 @@
 #pragma once
 #include "pch.h"
+#include "AudioEngine.h"
+
 using namespace Ogre;
 using namespace OgreBites;
 // ROAMING CAMERA
@@ -13,7 +15,7 @@ public:
 	// render_window: The window to which the camera is attached and will display within
 	// position: The Initial position of the camera in world coordinates
 	// lookat_position: A point in world coordinates that the camera is pointing at
-	RoamingCamera(SceneManager* scene_manager, RenderWindow* render_window,
+	RoamingCamera(SceneManager* scene_manager, CAudioEngine* audio_engine, RenderWindow* render_window,
 		Vector3 position, Vector3 lookat_position = Vector3(0, 0, 0));
 	~RoamingCamera();
 	// UPDATE
@@ -26,6 +28,7 @@ public:
 	Ogre::Vector2 getDirection();
 private:
 	SceneManager* scene_manager_;	// The main scene manager
+	CAudioEngine* audio_engine_;		// The audio engine
 	Camera* camera_;                // The camera itself
 	SceneNode* camera_yaw_node_;    // The scene node that holds the camera
 	SceneNode* camera_pitch_node_;    // The scene node that holds the camera

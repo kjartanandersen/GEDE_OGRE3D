@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "AudioEngine.h"
 
+
+
 Implementation* sgpImplementation = nullptr;
 
 Implementation::Implementation() {
@@ -77,6 +79,26 @@ void CAudioEngine::UnLoadSound(const std::string& strSoundName)
     sgpImplementation->mSounds.erase(tFoundIt);
 }
 
+void CAudioEngine::Set3DListenerAndOrientationDoppler(int listener, Ogre::Vector3f listener_pos, Ogre::Vector3f listener_vel, 
+    Ogre::Vector3f listener_forward, Ogre::Vector3f listener_up) 
+{
+    const FMOD_VECTOR f_list_pos = VectorToFmod(listener_pos);
+    const FMOD_VECTOR f_list_up = VectorToFmod(listener_up);
+    const FMOD_VECTOR f_list_forw = VectorToFmod(listener_forward);
+    const FMOD_VECTOR f_list_vel = VectorToFmod(listener_vel);
+
+    sgpImplementation->mpSystem->set3DListenerAttributes(listener, &f_list_pos, &f_list_vel, &f_list_forw, &f_list_up);
+}
+
+void CAudioEngine::Set3DListenerAndOrientation(int listener, Ogre::Vector3f listener_pos,
+    Ogre::Vector3f listener_forward, Ogre::Vector3f listener_up)
+{
+    const FMOD_VECTOR f_list_pos = VectorToFmod(listener_pos);
+    const FMOD_VECTOR f_list_up = VectorToFmod(listener_up);
+    const FMOD_VECTOR f_list_forw = VectorToFmod(listener_forward);
+
+    sgpImplementation->mpSystem->set3DListenerAttributes(listener, &f_list_pos, NULL, &f_list_forw, &f_list_up);
+}
 
 int CAudioEngine::PlaySound(const std::string& strSoundName, const Ogre::Vector3f& vPosition, float fVolumedB)
 {
@@ -129,6 +151,7 @@ void CAudioEngine::SetChannelVolume(int nChannelId, float fVolumedB)
 }
 
 void CAudioEngine::LoadBank(const std::string& strBankName, FMOD_STUDIO_LOAD_BANK_FLAGS flags) {
+    
     auto tFoundIt = sgpImplementation->mBanks.find(strBankName);
     if (tFoundIt != sgpImplementation->mBanks.end())
         return;

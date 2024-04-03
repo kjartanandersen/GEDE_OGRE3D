@@ -8,6 +8,7 @@
 #define PCH_H
 
 #include <Ogre.h>
+#include <OgreAssimpLoader.h>
 #include <OgreApplicationContext.h>
 #include <OgreInput.h>
 #include <SDL.h>

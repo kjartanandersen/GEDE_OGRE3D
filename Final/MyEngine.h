@@ -2,10 +2,12 @@
 
 #include "PlayerAvatar.h"
 #include "PlayerSinbadAvatar.h"
+#include "Songbird.h"
 #include "RoamingCamera.h"
 #include "PickupManager.h"
 #include "InputManager.h"
 #include "AudioEngine.h"
+#include "OgreAssimpLoader.h"
 
 
 using namespace Ogre;
@@ -45,6 +47,8 @@ private:
 	PlayerSinbadAvatar* player_;
 
 	InputManager* input_manager;
+	// Songbird
+	Songbird* song_bird_;
 
 
 	bool isController;

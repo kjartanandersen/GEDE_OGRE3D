@@ -51,7 +51,7 @@ void MyEngine::setupCamera()
 {
 	// Add camera
 
-	roaming_camera_ = new RoamingCamera(scene_manager_, getRenderWindow(), Vector3(0, 0, 0));
+	roaming_camera_ = new RoamingCamera(scene_manager_, audio_engine_, getRenderWindow(), Vector3(0, 0, 0));
 
 	
 }
@@ -82,6 +82,10 @@ void MyEngine::populateScene()
 	// Set material that is going to to be used to render the floor tiles
 	groundEntity->setMaterialName("Custom/BrickTiles");
 
+	// Add songbird
+	song_bird_ = new Songbird(scene_manager_, "songbird.mesh", Vector3(1, 0, 3));
+
+
 	// Set Shadow Technique
 	scene_manager_->setShadowTechnique(Ogre::ShadowTechnique::SHADOWTYPE_STENCIL_MODULATIVE);
 
@@ -98,10 +102,7 @@ void MyEngine::populateScene()
 
 	PickupManager::initialize(scene_manager_, player_->GetPlayerEntityNode());
 
-	for (int i = 0; i < 10; i++)
-	{
-		PickupManager::addPickupObject("MyCustomCube.mesh");
-	}
+	
 
 	
 

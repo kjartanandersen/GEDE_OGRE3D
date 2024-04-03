@@ -3,7 +3,6 @@
 #include "IPickupObject.h"
 #include "IPickupEffect.h"
 #include "SwirlEffect.h"
-#include "SwirlEffect.h"
 
 using namespace Ogre;
 using namespace OgreBites;

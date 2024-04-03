@@ -1,0 +1,79 @@
+
+material songbird.gltfbody1
+{
+	technique
+	{
+		pass 
+		{
+			specular 0.685946 0.685946 0.685946 1 400
+
+			texture_unit
+			{
+				texture body1_diffuse.png
+			}
+		}
+
+	}
+
+}
+
+material songbird.gltfbody2
+{
+	technique
+	{
+		pass 
+		{
+			specular 1 1 1 1 400
+
+			texture_unit
+			{
+				texture body2_diffuse.png
+			}
+		}
+
+	}
+
+}
+
+material songbird.gltfmaterial
+{
+	technique
+	{
+		pass 
+		{
+			specular 0.497683 0.497683 0.497683 1 400
+
+			texture_unit
+			{
+				texture material_diffuse.png
+			}
+
+			texture_unit
+			{
+				texture material_emissive.png
+				colour_op_ex add src_texture src_current
+				colour_op_multipass_fallback one one
+			}
+		}
+
+	}
+
+}
+
+material songbird.gltfwings
+{
+	technique
+	{
+		pass 
+		{
+			specular 0.509829 0.509829 0.509829 1 400
+
+			texture_unit
+			{
+				texture wings_diffuse.png
+			}
+		}
+
+	}
+
+}

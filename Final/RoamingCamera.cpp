@@ -1,10 +1,11 @@
 #include "pch.h"
 #include "RoamingCamera.h"
 
-RoamingCamera::RoamingCamera(SceneManager* scene_manager, RenderWindow*
+RoamingCamera::RoamingCamera(SceneManager* scene_manager, CAudioEngine* audio_engine, RenderWindow*
 	render_window, Vector3 position, Vector3 lookat_position)
 {
 	scene_manager_ = scene_manager;
+	audio_engine_ = audio_engine;
 	// Creating and attaching the camera
 	camera_yaw_node_ = scene_manager->getRootSceneNode()->createChildSceneNode("camera_yaw_node_");
 	camera_pitch_node_ = camera_yaw_node_->createChildSceneNode("camera_pitch_node_");
@@ -84,7 +85,11 @@ void RoamingCamera::update(Ogre::Real delta_time, const Uint8* keyboard_state)
 		camera_yaw_node_->translate(delta_time * movement_speed_ * direction);
 	}
 
+	Vector3f cam_pos = camera_yaw_node_->_getDerivedPosition();
+	Vector3f cam_up = camera_->getRealUp();
+	Vector3f cam_forw = -camera_->getRealDirection();
 
+	audio_engine_->Set3DListenerAndOrientation(0, cam_pos, cam_forw, cam_up);
 }
 
 

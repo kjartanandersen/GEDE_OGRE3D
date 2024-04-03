@@ -9,6 +9,7 @@
 #include <math.h>
 #include <iostream>
 
+
 struct AEVector3 {
     float x;
     float y;
@@ -49,7 +50,10 @@ public:
     void LoadEvent(const std::string& strEventName);
     void LoadSound(const std::string& strSoundName, bool b3d = true, bool bLooping = false, bool bStream = false);
     void UnLoadSound(const std::string& strSoundName);
-    //void Set3dListenerAndOrientation(const AEVector3& vPos = AEVector3{ 0, 0, 0 }, float fVolumedB = 0.0f);
+    void Set3DListenerAndOrientationDoppler(int listener, Ogre::Vector3f listener_pos, Ogre::Vector3f listener_vel,
+        Ogre::Vector3f listener_forward, Ogre::Vector3f listener_up);
+    void Set3DListenerAndOrientation(int listener, Ogre::Vector3f listener_pos,
+        Ogre::Vector3f listener_forward, Ogre::Vector3f listener_up);
     int PlaySound(const std::string& strSoundName, const Ogre::Vector3f& vPos = Ogre::Vector3f{ 0, 0, 0 }, float fVolumedB = 0.0f);
     void PlayEvent(const std::string& strEventName);
     //void StopChannel(int nChannelId);
