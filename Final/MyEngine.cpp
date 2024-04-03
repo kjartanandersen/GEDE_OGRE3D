@@ -83,7 +83,7 @@ void MyEngine::populateScene()
 	groundEntity->setMaterialName("Custom/BrickTiles");
 
 	// Add songbird
-	song_bird_ = new Songbird(scene_manager_, "songbird.mesh", Vector3(1, 0, 3));
+	song_bird_ = new Songbird(scene_manager_, "elephant.mesh", Vector3(1, 0, -100));
 
 
 	// Set Shadow Technique
@@ -112,7 +112,7 @@ void MyEngine::populateScene()
 bool MyEngine::frameStarted(const Ogre::FrameEvent& evt)
 {
 	// Main game loop of the application
-
+		
 	// Let parent handle this callback as well
 	ApplicationContext::frameStarted(evt);
 	// Store the time since last frame
@@ -143,7 +143,7 @@ bool MyEngine::frameStarted(const Ogre::FrameEvent& evt)
 		}
 
 	}
-
+	song_bird_->Update(delta_time);
 	const Ogre::Vector3 player_postion = player_->GetPlayerPosition();
 	const Ogre::Vector2 camera_movement = input_manager->getCameraMovement();
 

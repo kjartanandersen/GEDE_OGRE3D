@@ -22,6 +22,6 @@
 #include <OgreFileSystem.h>
 #include <OgreLodStrategyManager.h>
 
-#include "OgreAssimpLoader.h"
+#include <OgreAssimpLoader.h>
 
 #endif

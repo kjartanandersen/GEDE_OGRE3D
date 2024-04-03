@@ -12,9 +12,13 @@ public:
 		Vector3 position);
 	~Songbird();
 
+	void Update(Ogre::Real delta_time);
+
 private:
 	Entity* entity_;
 	SceneNode* scene_node_;
 	SceneManager* scene_manager_;
+
+	AnimationState* anim_state;
 };
 
