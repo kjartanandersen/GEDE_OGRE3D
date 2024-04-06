@@ -7,6 +7,8 @@
 #ifndef PCH_H
 #define PCH_H
 
+#define _HAS_STD_BYTE 0
+
 #include <Ogre.h>
 #include <OgreAssimpLoader.h>
 #include <OgreApplicationContext.h>
@@ -15,6 +17,5 @@
 #include <iostream>
 #include <OgreMath.h>
 #include <OgreRTShaderSystem.h>
-
 
 #endif

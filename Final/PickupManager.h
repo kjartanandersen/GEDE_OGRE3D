@@ -9,51 +9,54 @@ using namespace std;
 using namespace Ogre;
 using namespace OgreBites;
 
-class PickupManager : public Singleton<PickupManager>
-{
-public:
-    PickupManager(PickupManager const&) = delete;
-    void operator=(PickupManager const&) = delete;
-    /**
-    Initialize the Pickup Manager.
-    Return true upon success.
-    */
-    static bool initialize(SceneManager* sceneManager, SceneNode* playerNode);
 
-    /**
-    Destroy the Pickup Manager.
-    */
-    static void destroy();
+    class PickupManager : public Singleton<PickupManager>
+    {
+    public:
+        PickupManager(PickupManager const&) = delete;
+        void operator=(PickupManager const&) = delete;
+        /**
+        Initialize the Pickup Manager.
+        Return true upon success.
+        */
+        static bool initialize(SceneManager* sceneManager, SceneNode* playerNode);
 
-
-    /** Override standard Singleton retrieval. */
-    static PickupManager& getSingleton();
+        /**
+        Destroy the Pickup Manager.
+        */
+        static void destroy();
 
 
-    /// @copydoc Singleton::getSingleton()
-    static PickupManager* getSingletonPtr();
-
-    static void addPickupObject(const char* mesh_file_name);
+        /** Override standard Singleton retrieval. */
+        static PickupManager& getSingleton();
 
 
-    static void Update(Ogre::Real delta_time, const Uint8* state);
+        /// @copydoc Singleton::getSingleton()
+        static PickupManager* getSingletonPtr();
+
+        static void addPickupObject(const char* mesh_file_name);
 
 
-protected:
-    static SceneManager* scene_manager_;
-    static SceneNode* player_node_;
-    static std::list<IPickupObject*> pickup_objects;
+        static void Update(Ogre::Real delta_time, const Uint8* state);
 
-    /** Class default constructor */
-    PickupManager();
 
-    /** Class destructor */
-    ~PickupManager();
+    protected:
+        static SceneManager* scene_manager_;
+        static SceneNode* player_node_;
+        static std::list<IPickupObject*> pickup_objects;
 
-    /** Initialize the pickup manager instance. */
-    bool _initialize(SceneManager* sceneManager, SceneNode* playerNode);
+        /** Class default constructor */
+        PickupManager();
 
-    /** Destory the pickup manager instance. */
-    void _destroy();
-};
+        /** Class destructor */
+        ~PickupManager();
+
+        /** Initialize the pickup manager instance. */
+        bool _initialize(SceneManager* sceneManager, SceneNode* playerNode);
+
+        /** Destory the pickup manager instance. */
+        void _destroy();
+    };
+
+
 

@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "PlayerAvatar.h"
 
-PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name, CAudioEngine* audio_engine)
+
+PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, GEDEResourceManager* resource_manager, String mesh_file_name, CAudioEngine* audio_engine)
 {
 	scene_manager_ = scene_manager;
+	resource_manager_ = resource_manager;
 	audio_engine_ = audio_engine;
 	entity_ = scene_manager_->createEntity(mesh_file_name);
 	entity_->setCastShadows(true);
@@ -13,11 +15,11 @@ PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name, C
 
 
 	// Base Idle Animation State
-	PlayerAvatarAnimation* baseAnim = new PlayerAvatarAnimation;
-	PlayerAvatarAnimationState* baseIdleAnimState = new PlayerAvatarAnimationState;
+	MeshAnimation* baseAnim = new MeshAnimation;
+	MeshAnimationState* baseIdleAnimState = new MeshAnimationState;
 	baseIdleAnimState->animation = entity_->getAnimationState("IdleBase");
 	// Base Run Animation State
-	PlayerAvatarAnimationState* baseRunAnimState = new PlayerAvatarAnimationState;
+	MeshAnimationState* baseRunAnimState = new MeshAnimationState;
 	baseRunAnimState->animation = entity_->getAnimationState("RunBase");
 	AnimationEvent* footstepEvent1 = new AnimationEvent;
 	footstepEvent1->time = 0.1f;
@@ -37,13 +39,13 @@ PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, String mesh_file_name, C
 	animations_.push_back(baseAnim);
 
 	// Top Idle Animation State
-	PlayerAvatarAnimationState* topIdleAnimState = new PlayerAvatarAnimationState;
+	MeshAnimationState* topIdleAnimState = new MeshAnimationState;
 	topIdleAnimState->animation = entity_->getAnimationState("IdleTop");
 	// Top Run Animation State
-	PlayerAvatarAnimationState* topRunAnimState = new PlayerAvatarAnimationState;
+	MeshAnimationState* topRunAnimState = new MeshAnimationState;
 	topRunAnimState->animation = entity_->getAnimationState("RunTop");
 	// Top Animation
-	PlayerAvatarAnimation* topAnim = new PlayerAvatarAnimation;
+	MeshAnimation* topAnim = new MeshAnimation;
 	topAnim->name = "Top";
 	topAnim->animStates.insert({"Idle",topIdleAnimState });
 	topAnim->animStates.insert({"Run",topRunAnimState });
@@ -148,11 +150,10 @@ void PlayerAvatar::Update(Ogre::Real delta_time, const Ogre::Vector2 camera_dire
 
 void PlayerAvatar::PlayFootstepSounds()
 {
-
-	audio_engine_->LoadSound("C:\\Ogre\\GEDE\\GEDE\\LabFiles\\Sounds\\footstep.ogg", true, false, false);
-	audio_engine_->PlaySound("C:\\Ogre\\GEDE\\GEDE\\LabFiles\\Sounds\\footstep.ogg", entity_node_->_getDerivedPosition(), false);
-
 	
+	audio_engine_->LoadSound(resource_manager_->GetSoundsPath() + "footstep.ogg", true, false, false);
+	audio_engine_->PlaySoundAtPosition(resource_manager_->GetSoundsPath() + "footstep.ogg", entity_node_->_getDerivedPosition(), false);
+
 }
 
 SceneNode* PlayerAvatar::GetPlayerEntityNode()
