@@ -51,6 +51,7 @@ using namespace OgreBites;
 
 		// Setup Resource Manager
 		resource_manager_ = new GEDEResourceManager();
+		
 	}
 
 	void MyEngine::setupCamera()
@@ -67,16 +68,15 @@ using namespace OgreBites;
 
 		// Add sinbad model
 		//player_ = new PlayerAvatar(scene_manager_, "Sinbad.mesh");
-
+		
 		// Add sinbad 
 		player_ = new PlayerSinbadAvatar(scene_manager_, resource_manager_, audio_engine_);
-
-
+		
 		// Add ground
 		Plane plane(Ogre::Vector3::UNIT_Y, -5);
 		MeshPtr groundMesh = MeshManager::getSingleton()
 			.createPlane("MainGround", Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME,
-				plane, 1000, 1000, 100, 100, true, 1, 50, 50, Ogre::Vector3::UNIT_Z);
+				plane, 1000, 1000, 100, 100, true, 1, 100, 100, Ogre::Vector3::UNIT_Z);
 
 		// Build tangent vector for out mesh, to show the normal texture
 		// This will make the floor tiles look like they have depth
@@ -90,10 +90,12 @@ using namespace OgreBites;
 		groundEntity->setMaterialName("Custom/BrickTiles");
 
 		// Add Ninja
-		ninja_char = new MeshObject(scene_manager_, "ninja.mesh", Vector3(0, -5, -20));
+		ninja_char = new MeshObject(scene_manager_, audio_engine_, resource_manager_, "ninja.mesh", Vector3(0, -5, -20));
 		ninja_char->SetScale(0.05f, 0.05f, 0.05f);
 		ninja_char->Rotate(60.0f, Vector3f(0.0f, 1.0f, 0.0f));
-
+		ninja_char->CreateBodyPartAnimation("Body", "Attack1");
+		ninja_char->AddCallbackAtTime("Attack1",ninja_char ,0.33f );
+		ninja_char->AddCallbackAtTime("Attack1",ninja_char ,0.68f );
 
 		// Set Shadow Technique
 		scene_manager_->setShadowTechnique(Ogre::ShadowTechnique::SHADOWTYPE_STENCIL_MODULATIVE);
@@ -147,6 +149,7 @@ using namespace OgreBites;
 			}
 
 		}
+		
 		ninja_char->Update(delta_time);
 		const Ogre::Vector3 player_postion = player_->GetPlayerPosition();
 		const Ogre::Vector2 camera_movement = input_manager->getCameraMovement();

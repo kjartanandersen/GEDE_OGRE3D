@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "PlayerAvatar.h"
-
+#include <string>
 
 PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, GEDEResourceManager* resource_manager, String mesh_file_name, CAudioEngine* audio_engine)
 {
@@ -11,46 +11,51 @@ PlayerAvatar::PlayerAvatar(SceneManager* scene_manager, GEDEResourceManager* res
 	entity_->setCastShadows(true);
 	entity_node_ = scene_manager_->getRootSceneNode()->createChildSceneNode();
 	entity_node_->attachObject(entity_);
+	feet_position_ = new Vector3(entity_node_->getPosition());
+	prev_frame_anim_time = 0.0f;
+	
 
 
+	for (auto animState : entity_->getAllAnimationStates()->getAnimationStates())
+	{
+		MeshAnimationState* meshAnimState = new MeshAnimationState;
+		meshAnimState->animation = animState.second;
+		animations_.emplace(animState.first, meshAnimState);
+	}
+	
 
 	// Base Idle Animation State
 	MeshAnimation* baseAnim = new MeshAnimation;
-	MeshAnimationState* baseIdleAnimState = new MeshAnimationState;
-	baseIdleAnimState->animation = entity_->getAnimationState("IdleBase");
-	// Base Run Animation State
-	MeshAnimationState* baseRunAnimState = new MeshAnimationState;
-	baseRunAnimState->animation = entity_->getAnimationState("RunBase");
-	AnimationEvent* footstepEvent1 = new AnimationEvent;
-	footstepEvent1->time = 0.1f;
-	footstepEvent1->hasPlayed = false;
-	
-	AnimationEvent* footstepEvent2 = new AnimationEvent;
-	footstepEvent2->time = 0.4f;
-	footstepEvent2->hasPlayed = false;
-	baseRunAnimState->events.push_back(footstepEvent1);
-	
-	baseRunAnimState->events.push_back(footstepEvent2);
-	// Base Animation
-	baseAnim->name = "Base";
-	baseAnim->animStates.insert({ "Idle", baseIdleAnimState });
-	baseAnim->animStates.insert({"Run", baseRunAnimState });
-	baseAnim->curr_state = baseIdleAnimState;
-	animations_.push_back(baseAnim);
 
-	// Top Idle Animation State
-	MeshAnimationState* topIdleAnimState = new MeshAnimationState;
-	topIdleAnimState->animation = entity_->getAnimationState("IdleTop");
-	// Top Run Animation State
-	MeshAnimationState* topRunAnimState = new MeshAnimationState;
-	topRunAnimState->animation = entity_->getAnimationState("RunTop");
-	// Top Animation
+	// Base Run Animation State
+	MeshAnimationState* idleRunAnimState = new MeshAnimationState;
+	idleRunAnimState->animation = animations_.find("IdleBase")->second->animation;
+
+	baseAnim->curr_state = idleRunAnimState;
+	
+
 	MeshAnimation* topAnim = new MeshAnimation;
-	topAnim->name = "Top";
-	topAnim->animStates.insert({"Idle",topIdleAnimState });
-	topAnim->animStates.insert({"Run",topRunAnimState });
-	topAnim->curr_state = topIdleAnimState;
-	animations_.push_back(topAnim);
+
+	MeshAnimationState* idleTopState = new MeshAnimationState;
+	idleTopState->animation = animations_.find("IdleTop")->second->animation;
+
+	topAnim->curr_state = idleTopState;
+
+	
+	// Base Animation
+
+	
+	animation_states_.emplace("Base", baseAnim);
+	animation_states_.emplace("Top", topAnim);
+
+	AddCallbackAtTime("RunBase", this, 0.3f);
+	AddCallbackAtTime("RunBase", this, 0.6f);
+	
+	footstep_particle_ = new FootstepParticle(scene_manager_);
+	AddCallbackAtTime("RunBase", footstep_particle_, 0.3f);
+	AddCallbackAtTime("RunBase", footstep_particle_, 0.6f);
+
+	
 	StartAnimationLoop();
 
 
@@ -109,14 +114,17 @@ void PlayerAvatar::Update(Ogre::Real delta_time, const Uint8* state)
 	}
 
 	CheckAnimationEvents();
-
+	footstep_particle_->update(delta_time);
 	//animation_state_base_->addTime(delta_time);
 	//animation_state_top_->addTime(delta_time);
 
-	for ( auto anim : animations_)
-	{
-		anim->curr_state->animation->addTime(delta_time);
-	}
+	
+
+	animation_states_.find("Base")->second->curr_state->animation->addTime(delta_time);
+	animation_states_.find("Top")->second->curr_state->animation->addTime(delta_time);
+	feet_position_->x = entity_node_->getPosition().x;
+	feet_position_->y = entity_node_->getPosition().y - 6.0f;
+	feet_position_->z = entity_node_->getPosition().z;
 }
 
 void PlayerAvatar::Update(Ogre::Real delta_time, const Ogre::Vector2 camera_direction, const Ogre::Vector2 character_movement)
@@ -142,9 +150,9 @@ void PlayerAvatar::Update(Ogre::Real delta_time, const Ogre::Vector2 camera_dire
 	//animation_state_base_->addTime(delta_time);
 	//animation_state_top_->addTime(delta_time);
 
-	for (auto anim : animations_)
+	for (auto anim : animation_states_)
 	{
-		anim->curr_state->animation->addTime(delta_time);
+		anim.second->curr_state->animation->addTime(delta_time);
 	}
 }
 
@@ -179,21 +187,20 @@ Ogre::Radian PlayerAvatar::GetRotation(const Ogre::Vector3& vec)
 
 void PlayerAvatar::SetIdleAnimationLoop()
 {
-	for (auto anim : animations_)
+	if (animation_states_.find("Base")->second->curr_state->animation->getAnimationName() != "IdleBase")
 	{
-		if (anim->name == "Base" && anim->curr_state->animation->getAnimationName() != "IdleBase")
-		{
-			StopAnimationLoop();
-			anim->curr_state = anim->animStates.find("Idle")->second;
-			StartAnimationLoop();
-		}
+		StopAnimationLoop();
+		animation_states_.find("Base")->second->curr_state = animations_.find("IdleBase")->second;
+		animation_states_.find("Base")->second->curr_state = animations_.find("IdleBase")->second;
+		StartAnimationLoop();
+	}
 
-		if (anim->name == "Top" && anim->curr_state->animation->getAnimationName() != "IdleTop")
-		{
-			StopAnimationLoop();
-			anim->curr_state = anim->animStates.find("Idle")->second;
-			StartAnimationLoop();
-		}
+	if (animation_states_.find("Top")->second->curr_state->animation->getAnimationName() != "IdleTop")
+	{
+		StopAnimationLoop();
+		animation_states_.find("Top")->second->curr_state = animations_.find("IdleTop")->second;
+		animation_states_.find("Top")->second->curr_state = animations_.find("IdleTop")->second;
+		StartAnimationLoop();
 	}
 
 	/*
@@ -217,21 +224,18 @@ void PlayerAvatar::SetIdleAnimationLoop()
 
 void PlayerAvatar::SetRunAnimatonLoop()
 {
-	for (auto anim : animations_)
+	if (animation_states_.find("Base")->second->curr_state->animation->getAnimationName() != "RunBase")
 	{
-		if (anim->name == "Base" && anim->curr_state->animation->getAnimationName() != "RunBase")
-		{
-			StopAnimationLoop();
-			anim->curr_state = anim->animStates.find("Run")->second;
-			StartAnimationLoop();
-		}
+		StopAnimationLoop();
+		animation_states_.find("Base")->second->curr_state = animations_.find("RunBase")->second;
+		StartAnimationLoop();
+	}
 
-		if (anim->name == "Top" && anim->curr_state->animation->getAnimationName() != "RunTop")
-		{
-			StopAnimationLoop();
-			anim->curr_state = anim->animStates.find("Run")->second;
-			StartAnimationLoop();
-		}
+	if (animation_states_.find("Top")->second->curr_state->animation->getAnimationName() != "RunTop")
+	{
+		StopAnimationLoop();
+		animation_states_.find("Top")->second->curr_state = animations_.find("RunTop")->second;
+		StartAnimationLoop();
 	}
 	
 
@@ -273,21 +277,17 @@ void PlayerAvatar::SetRunAnimatonLoop()
 
 void PlayerAvatar::StopAnimationLoop(void) const
 {
-	for (auto anim : animations_)
+
+	if (animation_states_.find("Base")->second->curr_state->animation->getEnabled())
 	{
-		if (anim->name == "Base" && anim->curr_state->animation->getEnabled())
-		{
-			anim->curr_state->animation->setTimePosition(0.0f);
-			anim->curr_state->animation->setEnabled(false);
-			
-		}
+		animation_states_.find("Base")->second->curr_state->animation->setTimePosition(0.0f);
+		animation_states_.find("Base")->second->curr_state->animation->setEnabled(false);
+	}
 
-		if (anim->name == "Top" && anim->curr_state->animation->getEnabled())
-		{
-			anim->curr_state->animation->setTimePosition(0.0f);
-			anim->curr_state->animation->setEnabled(false);
-
-		}
+	if (animation_states_.find("Top")->second->curr_state->animation->getEnabled())
+	{
+		animation_states_.find("Top")->second->curr_state->animation->setTimePosition(0.0f);
+		animation_states_.find("Top")->second->curr_state->animation->setEnabled(false);
 	}
 
 	/*
@@ -308,26 +308,24 @@ void PlayerAvatar::StopAnimationLoop(void) const
 
 void PlayerAvatar::StartAnimationLoop(void) const
 {
-	for (auto anim : animations_)
-	{
-		if (anim->name == "Base" && !anim->curr_state->animation->getEnabled())
-		{
-			anim->curr_state->animation->setLoop(true);
-			anim->curr_state->animation->setEnabled(true);
-			for (auto event_ : anim->curr_state->events)
-			{
-				event_->hasPlayed = false;
-			}
-		}
 
-		if (anim->name == "Top" && !anim->curr_state->animation->getEnabled())
+	if (!animation_states_.find("Base")->second->curr_state->animation->getEnabled())
+	{
+		animation_states_.find("Base")->second->curr_state->animation->setLoop(true);
+		animation_states_.find("Base")->second->curr_state->animation->setEnabled(true);
+		for (auto event_ : animation_states_.find("Base")->second->curr_state->events)
 		{
-			anim->curr_state->animation->setLoop(true);
-			anim->curr_state->animation->setEnabled(true);
-			for (auto event_ : anim->curr_state->events)
-			{
-				event_->hasPlayed = false;
-			}
+			event_->hasPlayed = false;
+		}
+	}
+
+	if (!animation_states_.find("Top")->second->curr_state->animation->getEnabled())
+	{
+		animation_states_.find("Top")->second->curr_state->animation->setLoop(true);
+		animation_states_.find("Top")->second->curr_state->animation->setEnabled(true);
+		for (auto event_ : animation_states_.find("Top")->second->curr_state->events)
+		{
+			event_->hasPlayed = false;
 		}
 	}
 
@@ -349,24 +347,47 @@ void PlayerAvatar::StartAnimationLoop(void) const
 
 void PlayerAvatar::CheckAnimationEvents()
 {
-	for (auto anim : animations_)
+	for (auto anim : animation_states_)
 	{
-		Ogre::Real anim_time = anim->curr_state->animation->getTimePosition();
-		for (auto event_ : anim->curr_state->events)
+		Ogre::Real anim_time = anim.second->curr_state->animation->getTimePosition();
+		for (auto event_ : anim.second->curr_state->events)
 		{
-			if (anim_time <= 0.1)
+			if (anim_time < 0.1 && event_->hasPlayed == true)
 				event_->hasPlayed = false;
 			if (anim_time >= event_->time && !event_->hasPlayed)
 			{
-				PlayFootstepSounds();
+				for (auto callback : event_->callbacks)
+				{
+
+					if (callback)
+					callback->callback(feet_position_);
+				}
 				event_->hasPlayed = true;
 			}
 		}
 
+
 	}
+	
 }
 
 Ogre::Vector3 PlayerAvatar::GetPlayerPosition()
 {
 	return entity_node_->getPosition();
+}
+
+void PlayerAvatar::AddCallbackAtTime(String animation_name, ICallback* callback_object, Ogre::Real time_)
+{
+	AnimationEvent* animEvent = new AnimationEvent;
+	animEvent->callbacks.push_back(callback_object);
+	animEvent->hasPlayed = false;
+	animEvent->time = time_;
+
+
+	animations_.find(animation_name)->second->events.push_back(animEvent);
+}
+
+void PlayerAvatar::callback(void* item)
+{
+	PlayFootstepSounds();
 }

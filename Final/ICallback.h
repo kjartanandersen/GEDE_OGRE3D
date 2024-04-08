@@ -7,7 +7,7 @@
 	public:
 		virtual ~ICallback() {}
 
-		virtual void callback() = 0;
+		virtual void callback(void* item) = 0;
 	};
 
 

@@ -48,6 +48,7 @@ using namespace OgreBites;
 
 		//
 		PlayerSinbadAvatar* player_;
+		
 
 		InputManager* input_manager;
 		// Songbird

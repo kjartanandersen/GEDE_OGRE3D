@@ -3,11 +3,14 @@
 #include "AudioEngine.h"
 #include "AnimationEvents.h"
 #include "ResourceManager.h"
+#include "ParticleEffect.h"
 
 using namespace Ogre;
 using namespace OgreBites;
 
-	class PlayerAvatar
+class FootstepParticle;
+
+	class PlayerAvatar : public ICallback
 	{
 	public:
 		SceneNode* entity_node_;
@@ -22,12 +25,16 @@ using namespace OgreBites;
 		//
 		SceneNode* GetPlayerEntityNode();
 		Ogre::Vector3 GetPlayerPosition();
+		void AddCallbackAtTime(String animation_name, ICallback* callback_object, Ogre::Real time_);
+
+		void callback(void* item);
 
 	private:
 		SceneManager* scene_manager_;
 		CAudioEngine* audio_engine_;
 		GEDEResourceManager* resource_manager_;
-
+		FootstepParticle* footstep_particle_;
+		Vector3* feet_position_;
 
 		//AnimationState* animation_state_base_;
 		//AnimationState* animation_state_top_;
@@ -38,12 +45,13 @@ using namespace OgreBites;
 		Ogre::Real rotation_speed_;
 
 		float speed_;
+		Ogre::Real prev_frame_anim_time;
 
 		bool isWalking;
 
 		// Animation Data
-		std::list<MeshAnimation*> animations_;
-
+		std::map<std::string, MeshAnimationState*> animations_;
+		std::map<std::string, MeshAnimation*> animation_states_;
 
 
 		void Move(Ogre::Vector3 translate_vector, float rotation, Ogre::Real delta_time);

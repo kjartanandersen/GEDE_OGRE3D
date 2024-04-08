@@ -147,6 +147,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MyEngine.cpp" />
+    <ClCompile Include="ParticleEffect.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -170,6 +171,7 @@
     <ClInclude Include="IPickupEffect.h" />
     <ClInclude Include="IPickupObject.h" />
     <ClInclude Include="MyEngine.h" />
+    <ClInclude Include="ParticleEffect.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PickupManager.h" />
     <ClInclude Include="PickupObject.h" />

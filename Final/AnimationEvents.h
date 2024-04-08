@@ -20,8 +20,6 @@ using namespace Ogre;
 
 	struct MeshAnimation
 	{
-		Ogre::String name;
-		std::map<Ogre::String, MeshAnimationState*> animStates;
 		MeshAnimationState* curr_state;
 	};
 
