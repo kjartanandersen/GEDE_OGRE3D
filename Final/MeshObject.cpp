@@ -122,3 +122,8 @@ void MeshObject::AddCallbackAtTime(String animation_name, ICallback* callback_ob
 
 	animations_.find(animation_name)->second->events.push_back(animEvent);
 }
+
+void MeshObject::SetShadow(bool val)
+{
+	entity_->setCastShadows(val);
+}

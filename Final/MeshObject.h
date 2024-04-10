@@ -22,6 +22,7 @@ public:
 	void CreateBodyPartAnimation(Ogre::String bodyPartName, Ogre::String animName);
 	void callback(void* item);
 	void AddCallbackAtTime(String animation_name, ICallback* callback_object, Ogre::Real time_);
+	void SetShadow(bool val);
 
 private:
 	Entity* entity_;

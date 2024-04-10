@@ -92,10 +92,15 @@ using namespace OgreBites;
 		// Add Ninja
 		ninja_char = new MeshObject(scene_manager_, audio_engine_, resource_manager_, "ninja.mesh", Vector3(0, -5, -20));
 		ninja_char->SetScale(0.05f, 0.05f, 0.05f);
-		ninja_char->Rotate(60.0f, Vector3f(0.0f, 1.0f, 0.0f));
+		ninja_char->Rotate(00.0f, Vector3f(0.0f, 1.0f, 0.0f));
 		ninja_char->CreateBodyPartAnimation("Body", "Attack1");
 		ninja_char->AddCallbackAtTime("Attack1",ninja_char ,0.33f );
 		ninja_char->AddCallbackAtTime("Attack1",ninja_char ,0.68f );
+
+		// Add Ninja
+		elephant_char = new MeshObject(scene_manager_, audio_engine_, resource_manager_, "elephant.mesh", Vector3(0, -5, -40));
+		elephant_char->SetScale(3.00f, 3.00f, 3.00f);
+		elephant_char->Rotate(60.0f, Vector3f(0.0f, 1.0f, 0.0f));
 
 		// Set Shadow Technique
 		scene_manager_->setShadowTechnique(Ogre::ShadowTechnique::SHADOWTYPE_STENCIL_MODULATIVE);
@@ -151,6 +156,7 @@ using namespace OgreBites;
 		}
 		
 		ninja_char->Update(delta_time);
+		elephant_char->Update(delta_time);
 		const Ogre::Vector3 player_postion = player_->GetPlayerPosition();
 		const Ogre::Vector2 camera_movement = input_manager->getCameraMovement();
 

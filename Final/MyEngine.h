@@ -53,6 +53,7 @@ using namespace OgreBites;
 		InputManager* input_manager;
 		// Songbird
 		MeshObject* ninja_char;
+		MeshObject* elephant_char;
 
 
 		bool isController;
